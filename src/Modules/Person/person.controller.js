@@ -4,9 +4,10 @@ const BirthModel = require('../Birth/birth.model')
 module.exports = {
     register: async (req, res) => {
         try {
-            const newPerson = await PersonModel.create(req.body.personalInformations)
-            const birth = await BirthModel.create({ ...req.body.birthinfo, personid: newPerson._id })
+            const birth = await BirthModel.create({ ...req.body.birthinfo, personid: req.body.personalInformations._id })
+            const newPerson = await PersonModel.create({ ...req.body.personalInformations, birthInfo: birth._id })
             console.log(birth)
+            // console.log(newPerson)
             res.status(200).json({})
         } catch (error) {
             console.log(error)
@@ -48,7 +49,7 @@ module.exports = {
     },
     finPersonByNames: async (req, res) => {
         console.log(req.query)
-    
+
         await PersonModel.find({
             firstname: { $regex: req.query.firstname, $options: 'i' },
             middlename: { $regex: req.query.middlename, $options: 'i' },
@@ -61,6 +62,39 @@ module.exports = {
                 console.log(error)
             })
     },
+    getAll: async (req, res) => {
+        await PersonModel.find({})
+            .populate('birthInfo')
+            .then(data => {
+                console.log(data)
+                return res.status(200).json(data)
+            }).catch(error => {
+                console.log(error)
+                return res.status(500).json(error)
+            })
+    },
+
+    getByGender: async (req, res) => {
+        const { gender } = req.params
+        await PersonModel.find({
+            gender: { $regex: gender, $options: 'i' },
+        })
+            .populate('birthInfo')
+            .then(data => {
+                return res.status(200).json(data)
+            }).catch(error => {
+                return res.status(500).json(error)
+            })
+    },
+
+    countUsers: async (req, res) => {
+        const men = await PersonModel.countDocuments({ gender: { $regex: 'male', $options: 'i' } })
+        const female = await PersonModel.countDocuments({ gender: { $regex: 'female', $options: 'i' } })
+        return res.status(200).json({
+            female, men, total: female + men
+        })
+    },
+
     getOne: async (req, res) => {
 
     },

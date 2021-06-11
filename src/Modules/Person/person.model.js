@@ -23,9 +23,16 @@ const PersoninfoSchema = mongoose.Schema({
 
     phonenumber: {
         type: String,
-        unique:true
+        unique: true
     },
-
+    birthInfo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref:'Birth'
+    },
+    finishedRegistration:{
+        type:mongoose.Schema.Types.Boolean,
+        default:false
+    },
     country: {
         type: String
     },

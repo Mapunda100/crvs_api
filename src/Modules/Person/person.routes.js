@@ -8,6 +8,11 @@ router.post('/register', generateId, personController.register)
 router.delete('/delete', personController.delete)
 router.put('/update', personController.update)
 router.get('/search', personController.search)
+router.get('/', personController.getAll)
+router.get('/withgender/:gender', personController.getByGender)
+router.get('/countUsers', personController.countUsers)
+
+
 router.get('/findByNames', personController.finPersonByNames)
 // router.post('/father', personController.fetchPersonsFather)
 router.post('/parent', personController.fetchPersonsParent)
