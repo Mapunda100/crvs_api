@@ -18,7 +18,8 @@ const PersoninfoSchema = mongoose.Schema({
     },
 
     gender: {
-        type: String
+        type: String,
+        enum: ['male', 'female']
     },
 
     phonenumber: {
@@ -27,11 +28,11 @@ const PersoninfoSchema = mongoose.Schema({
     },
     birthInfo: {
         type: mongoose.Schema.Types.ObjectId,
-        ref:'Birth'
+        ref: 'Birth'
     },
-    finishedRegistration:{
-        type:mongoose.Schema.Types.Boolean,
-        default:false
+    finishedRegistration: {
+        type: mongoose.Schema.Types.Boolean,
+        default: false
     },
     country: {
         type: String

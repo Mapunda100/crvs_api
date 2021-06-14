@@ -77,7 +77,7 @@ module.exports = {
     getByGender: async (req, res) => {
         const { gender } = req.params
         await PersonModel.find({
-            gender: { $regex: gender, $options: 'i' },
+            gender,
         })
             .populate('birthInfo')
             .then(data => {
@@ -99,7 +99,34 @@ module.exports = {
 
     },
     search: async (req, res) => {
+        try {
+            console.log(req.params)
+            console.log(req.query)
 
+            if (req.params.mode === 'soft') {
+                let data = await PersonModel.find({
+                    $or: [
+                        { firstname: { $regex: req.query.firstname, $options: 'i' } },
+                        { middlename: { $regex: req.query.middlename, $options: 'i' } },
+                        { lastname: { $regex: req.query.lastname, $options: 'i' } }
+                    ]
+                })
+                return res.status(200).json(data)
+            } else {
+                let data = await PersonModel.findOne({
+                    firstname: req.query.firstname,
+                    middlename: req.query.middlename,
+                    lastname: req.query.lastname
+                })
+                if (!data)
+                    return res.status(200).json([])
+                return res.status(200).json([data])
+
+            }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json(error)
+        }
     },
     delete: async (req, res) => {
 
