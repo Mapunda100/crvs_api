@@ -7,7 +7,7 @@ const PersonModel = require('./person.model')
 router.post('/register', generateId, personController.register)
 router.delete('/delete', personController.delete)
 router.put('/update', personController.update)
-router.get('/search', personController.search)
+router.get('/search/:mode', personController.search)
 router.get('/', personController.getAll)
 router.get('/withgender/:gender', personController.getByGender)
 router.get('/countUsers', personController.countUsers)
@@ -26,7 +26,7 @@ async function generateId(req, res, next) {
     const userid = await PersonModel.countDocuments() + 1;
     const dateofbirth = req.body.birthinfo.dateofbirth
     req.body.personalInformations._id = `${dateofbirth}-000${userid}`;
-    next()   
+    next()
 }
 
 async function generateParentId(req, res, next) {
@@ -34,5 +34,5 @@ async function generateParentId(req, res, next) {
     const userid = await PersonModel.countDocuments() + 1;
     const dateofbirth = req.body.personinfo.dateofbirth
     req.body.personinfo._id = `${dateofbirth}-000${userid}`;
-    next()   
+    next()
 }
