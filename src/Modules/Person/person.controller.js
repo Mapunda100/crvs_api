@@ -24,14 +24,47 @@ module.exports = {
     //         .catch(error => res.status(500).json(error))
     // },
     fetchPersonsParent: async (req, res) => {
+        try {
+            console.log(req.params)
+            console.log(req.query)
+            const gender = req.params.type === 'father' ? 'male' : 'female'
+            // console.log(gender)
+
+            // if (req.params.mode === 'soft') {
+            let data = await PersonModel.find({
+                gender,
+                $or: [
+                    { firstname: { $regex: req.query.firstname, $options: 'i' } },
+                    { middlename: { $regex: req.query.middlename, $options: 'i' } },
+                    { lastname: { $regex: req.query.lastname, $options: 'i' } }
+                ]
+            })
+            console.log(data)
+            return res.status(200).json(data)
+            // }
+            //  else {
+            //     let data = await PersonModel.findOne({
+            //         firstname: req.query.firstname,
+            //         middlename: req.query.middlename,
+            //         lastname: req.query.lastname
+            //     })
+            //     if (!data)
+            //         return res.status(200).json([])
+            //     return res.status(200).json([data])
+
+            // }
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json(error)
+        }
         // console.log(req.body)
-        await PersonModel.findOne({
-            firstname: req.body.firstname,
-            middlename: req.body.middlename,
-            lastname: req.body.lastname
-        })
-            .then(data => res.status(200).json({ data }))
-            .catch(error => res.status(500).json(error))
+        // await PersonModel.findOne({
+        //     firstname: req.body.firstname,
+        //     middlename: req.body.middlename,
+        //     lastname: req.body.lastname
+        // })
+        //     .then(data => res.status(200).json({ data }))
+        //     .catch(error => res.status(500).json(error))
     },
     registerParent: async (req, res) => {
         try {
@@ -111,6 +144,9 @@ module.exports = {
                         { lastname: { $regex: req.query.lastname, $options: 'i' } }
                     ]
                 })
+                    .populate('birthInfo')
+                    .populate('fatherid')
+                    .populate('motherid')
                 return res.status(200).json(data)
             } else {
                 let data = await PersonModel.findOne({

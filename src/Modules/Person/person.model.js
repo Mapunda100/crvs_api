@@ -16,7 +16,13 @@ const PersoninfoSchema = mongoose.Schema({
     lastname: {
         type: String
     },
-
+    job: {
+        type: String
+    },
+    religion: {
+        type: String,
+        enum: ['christian', 'muslim']
+    },
     gender: {
         type: String,
         enum: ['male', 'female']

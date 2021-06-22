@@ -15,14 +15,14 @@ router.get('/countUsers', personController.countUsers)
 
 router.get('/findByNames', personController.finPersonByNames)
 // router.post('/father', personController.fetchPersonsFather)
-router.post('/parent', personController.fetchPersonsParent)
+router.get('/parent/:type', personController.fetchPersonsParent)
 router.post('/registerParent', generateParentId, personController.registerParent)
 
 module.exports = router
 
 
 async function generateId(req, res, next) {
-    // console.log(req.body)
+    console.log(req.body)
     const userid = await PersonModel.countDocuments() + 1;
     const dateofbirth = req.body.birthinfo.dateofbirth
     req.body.personalInformations._id = `${dateofbirth}-000${userid}`;
