@@ -5,9 +5,7 @@ module.exports = {
     register: async (req, res) => {
         try {
             const birth = await BirthModel.create({ ...req.body.birthinfo, personid: req.body.personalInformations._id })
-            const newPerson = await PersonModel.create({ ...req.body.personalInformations, birthInfo: birth._id })
-            console.log(birth)
-            // console.log(newPerson)
+            await PersonModel.create({ ...req.body.personalInformations, birthInfo: birth._id, finishedRegistration: true })
             res.status(200).json({})
         } catch (error) {
             console.log(error)
@@ -68,12 +66,9 @@ module.exports = {
     },
     registerParent: async (req, res) => {
         try {
-            console.log('Registered Parent Temp')
-            console.log(req.body)
-            // const userId = await generateId(req.body.personinfo.dateofbirth)
+            const birth = await BirthModel.create({ personid: req.body.personinfo._id, dateofbirth: req.body.personinfo.dateofbirth })
+            const person = await PersonModel.create({ ...req.body.personinfo, birthInfo: birth._id })
 
-            const person = await PersonModel.create(req.body.personinfo)
-            console.log(person)
             res.status(200).json(person)
         } catch (error) {
             console.log(error)

@@ -1,73 +1,40 @@
 const mongoose = require('mongoose')
 
 const DeathSchema = mongoose.Schema({
-    firstname: {
+    personid: {
         type: String,
+        ref: 'Person',
+        required: true,
+        unique: true
     },
-
-    middlename: {
-        type: String,
-    },
-
-    lastname: {
-        type: String,
-    },
-
-    job: {
-        type: String,
-    },
-
-    age: {
-        type: String,
-    },
-
-
     placeofdeath: {
         type: String,
+        enum: ['hospital', 'home', 'elsewhere'],
+        required: true
     },
 
     typeofdeath: {
         type: String,
+        enum: ['nature', 'not nature'],
+        required: true
     },
 
-    dateofbirth: {
-        type: String,
+    dateofdeath: {
+        type: mongoose.Schema.Types.Date,
+        required: true,
     },
 
     causeofdeath: {
         type: String,
+        required: true
     },
-    // location: {
-    //     country: String,
-    //     region: String,
-    //     district: String,
-    //     ward: String,
-    //     street: String
-    // },
-
-    country: {
-        type: String,
+    location: {
+        country: String,
+        region: String,
+        district: String,
+        ward: String,
+        street: String
     },
-
-    region: {
-        type: String,
-    },
-
-    district: {
-        type: String,
-    },
-
-    ward: {
-        type: String,
-    },
-
-    street: {
-        type: String,
-    },
-
-    personid: {
-        type: String
-    }
 })
 
 module.exports = mongoose.model('Deaths', DeathSchema)

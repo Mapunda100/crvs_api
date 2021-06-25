@@ -40,6 +40,13 @@ const PersoninfoSchema = mongoose.Schema({
         type: mongoose.Schema.Types.Boolean,
         default: false
     },
+    // location: {
+    //     country: String,
+    //     region: String,
+    //     ward: String,
+    //     district: String,
+    //     street:String
+    // },
     country: {
         type: String
     },
@@ -68,9 +75,9 @@ const PersoninfoSchema = mongoose.Schema({
         type: String
     },
 
-    dateofbirth: {
-        type: mongoose.Schema.Types.Date,
-    }
+    // dateofbirth: {
+    //     type: mongoose.Schema.Types.Date,
+    // }
 })
 
 module.exports = mongoose.model('Person', PersoninfoSchema)

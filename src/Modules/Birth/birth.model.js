@@ -4,7 +4,8 @@ const mongoose = require('mongoose')
 const BirthSchema = mongoose.Schema({
     personid: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
 
     dateofbirth: {
