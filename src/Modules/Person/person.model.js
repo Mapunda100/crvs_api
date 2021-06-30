@@ -78,6 +78,6 @@ const PersoninfoSchema = mongoose.Schema({
     // dateofbirth: {
     //     type: mongoose.Schema.Types.Date,
     // }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Person', PersoninfoSchema)

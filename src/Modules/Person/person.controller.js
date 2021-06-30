@@ -93,6 +93,8 @@ module.exports = {
     getAll: async (req, res) => {
         await PersonModel.find({})
             .populate('birthInfo')
+            .populate('motherid')
+            .populate('fatherid')
             .then(data => {
                 console.log(data)
                 return res.status(200).json(data)
