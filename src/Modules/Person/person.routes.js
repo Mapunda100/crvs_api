@@ -11,6 +11,7 @@ router.get('/search/:mode', personController.search)
 router.get('/', personController.getAll)
 router.get('/withgender/:gender', personController.getByGender)
 router.get('/countUsers', personController.countUsers)
+router.get('/getchildrenyouthselders', personController.getChildrenYouthsElders)
 
 
 router.get('/findByNames', personController.finPersonByNames)

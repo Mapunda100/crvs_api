@@ -21,7 +21,7 @@ module.exports = {
                 return res.status(401).json()
             }
             var token = jwt.sign({ userValues }, 's3cr3tkey');
-            console.log(token)
+            // console.log(token)
 
             return res.status(200).json({
                 token, user: userValues
@@ -33,9 +33,9 @@ module.exports = {
             return res.status(500).json(error)
         }
     },
-    test:async(req,res)=>{
+    test: async (req, res) => {
         //
-        return res.status(200).json({data:'helow kipipa'})
+        return res.status(200).json({ data: 'helow kipipa' })
     }
     /** 
      * other business logics concerning the user model

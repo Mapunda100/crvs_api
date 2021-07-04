@@ -1,5 +1,6 @@
 const PersonModel = require('./person.model')
 const BirthModel = require('../Birth/birth.model')
+const moment = require('moment')
 
 module.exports = {
     register: async (req, res) => {
@@ -161,6 +162,32 @@ module.exports = {
             return res.status(500).json(error)
         }
     },
+
+    getChildrenYouthsElders: async (req, res) => {
+        const youths = await BirthModel.countDocuments({
+            dateofbirth: {
+                $gte: moment().subtract(44, 'years'),
+                $lte: moment().subtract(15, 'years')
+            }
+        })
+        const childrens = await BirthModel.countDocuments({
+            dateofbirth: {
+                $gte: moment().subtract(14, 'years'),
+                $lte: moment().subtract(0, 'years')
+            }
+        })
+        const elders = await BirthModel.countDocuments({
+            dateofbirth: {
+                $lte: moment().subtract(45, 'years')
+            }
+        })
+        const final = {
+            childrens, youths, elders
+        }
+        console.log(final)
+        return res.status(200).json(final)
+    },
+
     delete: async (req, res) => {
 
     },
