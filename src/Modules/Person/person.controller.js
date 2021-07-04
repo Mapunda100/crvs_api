@@ -1,5 +1,7 @@
 const PersonModel = require('./person.model')
 const BirthModel = require('../Birth/birth.model')
+const DeathModel = require('../Death/death.model')
+
 const moment = require('moment')
 
 module.exports = {
@@ -185,6 +187,13 @@ module.exports = {
             childrens, youths, elders
         }
         console.log(final)
+        return res.status(200).json(final)
+    },
+
+    birthVSDeath: async (req, res) => {
+        const births = await PersonModel.countDocuments()
+        const deaths = await DeathModel.countDocuments()
+        const final = { births, deaths }
         return res.status(200).json(final)
     },
 
