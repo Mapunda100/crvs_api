@@ -9,7 +9,7 @@ const BirthSchema = mongoose.Schema({
     },
 
     dateofbirth: {
-        type: String
+        type: mongoose.Schema.Types.Date
     },
 
     typeofbirth: {
