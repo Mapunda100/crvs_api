@@ -94,7 +94,7 @@ module.exports = {
             })
     },
     getAll: async (req, res) => {
-        await PersonModel.find({active:true})
+        await PersonModel.find({ active: true })
             .populate('birthInfo')
             .populate('motherid')
             .populate('fatherid')
@@ -110,7 +110,7 @@ module.exports = {
     getByGender: async (req, res) => {
         const { gender } = req.params
         await PersonModel.find({
-            gender,
+            gender, active: true
         })
             .populate('birthInfo')
             .then(data => {
@@ -121,8 +121,10 @@ module.exports = {
     },
 
     countUsers: async (req, res) => {
-        const men = await PersonModel.countDocuments({ gender: { $regex: 'male', $options: 'i' } })
-        const female = await PersonModel.countDocuments({ gender: { $regex: 'female', $options: 'i' } })
+        // const men = await PersonModel.countDocuments({ gender: { $regex: 'male', $options: 'i' } })
+        // const female = await PersonModel.countDocuments({ gender: { $regex: 'female', $options: 'i' } })
+        const men = await PersonModel.countDocuments({ gender: 'male', active: true })
+        const female = await PersonModel.countDocuments({ gender: 'female', active: true })
         return res.status(200).json({
             female, men, total: female + men
         })
@@ -198,7 +200,7 @@ module.exports = {
     },
 
     delete: async (req, res) => {
-        // console.log("High coict")
+        console.log("High coict")
         // console.log(req.body)
         console.log(req.params)
         const id = req.params.userid;
@@ -210,8 +212,6 @@ module.exports = {
             }).catch(error => {
                 console.log(error);
             })
-
-
         // req.body.person.delete()
         // return res.status(200).json(response)
 
