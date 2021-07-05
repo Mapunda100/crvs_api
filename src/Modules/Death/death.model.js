@@ -35,6 +35,6 @@ const DeathSchema = mongoose.Schema({
         ward: String,
         street: String
     },
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Deaths', DeathSchema)

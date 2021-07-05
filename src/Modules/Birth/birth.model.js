@@ -39,7 +39,7 @@ const BirthSchema = mongoose.Schema({
     street: {
         type: String
     }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Birth', BirthSchema)
 
