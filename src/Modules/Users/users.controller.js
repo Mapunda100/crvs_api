@@ -7,8 +7,13 @@ module.exports = {
         console.log('registering user')
         console.log(req.body)
         await UserModel.create(req.body)
-            .then(() => res.status(200).json())
-            .catch(err => res.status(500).json(err))
+            .then(() => res.status(201).json())
+            .catch(err => {
+                if (err.code === 11000) {
+                    return res.status(500).json(`Duplicate entry "${err.keyValue.email || err.keyValue.phonenumber}"`,)
+                }
+                return res.status(500).json(err.message)
+            })
     },
     // localhost:8500/login
     login: async (req, res) => {
@@ -36,6 +41,11 @@ module.exports = {
     test: async (req, res) => {
         //
         return res.status(200).json({ data: 'helow kipipa' })
+    },
+    fetchAll: async (req, res) => {
+        let users = await UserModel.find()
+        // console.log(users)
+        return res.status(200).json(users)
     }
     /** 
      * other business logics concerning the user model
