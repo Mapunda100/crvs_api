@@ -10,7 +10,7 @@ const BirthSchema = mongoose.Schema({
 
 
     dateofbirth: {
-        type: String
+        type: mongoose.Schema.Types.Date
     },
 
     typeofbirth: {
@@ -40,7 +40,7 @@ const BirthSchema = mongoose.Schema({
     street: {
         type: String
     }
-})
+}, { timestamps: true })
 
 module.exports = mongoose.model('Birth', BirthSchema)
 

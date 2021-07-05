@@ -1,7 +1,8 @@
 const PersonModel = require('./person.model')
 const BirthModel = require('../Birth/birth.model')
-const { response } = require('express')
-const personModel = require('./person.model')
+const DeathModel = require('../Death/death.model')
+
+const moment = require('moment')
 
 module.exports = {
     register: async (req, res) => {
@@ -163,6 +164,39 @@ module.exports = {
             return res.status(500).json(error)
         }
     },
+
+    getChildrenYouthsElders: async (req, res) => {
+        const youths = await BirthModel.countDocuments({
+            dateofbirth: {
+                $gte: moment().subtract(44, 'years'),
+                $lte: moment().subtract(15, 'years')
+            }
+        })
+        const childrens = await BirthModel.countDocuments({
+            dateofbirth: {
+                $gte: moment().subtract(14, 'years'),
+                $lte: moment().subtract(0, 'years')
+            }
+        })
+        const elders = await BirthModel.countDocuments({
+            dateofbirth: {
+                $lte: moment().subtract(45, 'years')
+            }
+        })
+        const final = {
+            childrens, youths, elders
+        }
+        console.log(final)
+        return res.status(200).json(final)
+    },
+
+    birthVSDeath: async (req, res) => {
+        const births = await PersonModel.countDocuments()
+        const deaths = await DeathModel.countDocuments()
+        const final = { births, deaths }
+        return res.status(200).json(final)
+    },
+
     delete: async (req, res) => {
         // console.log("High coict")
         // console.log(req.body)

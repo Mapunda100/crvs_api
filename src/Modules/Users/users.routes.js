@@ -3,8 +3,9 @@ const router = new Router()
 
 const userController = require('./users.controller')
 // localhost:8500/user/register
-router.post('/register',userController.register)
-router.post('/login',userController.login)
+router.post('/register', userController.register)
+router.post('/login', userController.login)
+router.get('/allUsers', userController.fetchAll)
 // router.get('/test',userController.test)
 // router.put
 // router.patch
