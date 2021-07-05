@@ -1,5 +1,7 @@
 const PersonModel = require('./person.model')
 const BirthModel = require('../Birth/birth.model')
+const { response } = require('express')
+const personModel = require('./person.model')
 
 module.exports = {
     register: async (req, res) => {
@@ -91,7 +93,7 @@ module.exports = {
             })
     },
     getAll: async (req, res) => {
-        await PersonModel.find({})
+        await PersonModel.find({active:true})
             .populate('birthInfo')
             .populate('motherid')
             .populate('fatherid')
@@ -162,6 +164,22 @@ module.exports = {
         }
     },
     delete: async (req, res) => {
+        // console.log("High coict")
+        // console.log(req.body)
+        console.log(req.params)
+        const id = req.params.userid;
+        PersonModel
+            .findOneAndUpdate({ _id: id }, { active: false })
+            .exec() // is this needed? https://mongoosejs.com/docs/api/model.html#model_Model-remove
+            .then(data => {
+                res.json(data);
+            }).catch(error => {
+                console.log(error);
+            })
+
+
+        // req.body.person.delete()
+        // return res.status(200).json(response)
 
     },
     update: async (req, res) => {

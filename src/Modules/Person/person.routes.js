@@ -17,6 +17,7 @@ router.get('/findByNames', personController.finPersonByNames)
 // router.post('/father', personController.fetchPersonsFather)
 router.get('/parent/:type', personController.fetchPersonsParent)
 router.post('/registerParent', generateParentId, personController.registerParent)
+router.delete('/:userid', personController.delete)
 
 module.exports = router
 

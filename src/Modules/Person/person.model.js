@@ -16,6 +16,11 @@ const PersoninfoSchema = mongoose.Schema({
     lastname: {
         type: String
     },
+    active:{
+        type:Boolean,
+        default:true
+    },
+
     job: {
         type: String
     },
