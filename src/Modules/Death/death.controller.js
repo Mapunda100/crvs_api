@@ -21,6 +21,18 @@ module.exports = {
             res.status(500).json(error)
         }
     },
+    getAll: async (req, res) => {
+        try {
+            const { userId } = req.params
+            const data = await DeathModel.find()
+                .populate('personid')
+            console.log(data)
+            res.status(200).json(data)
+        } catch (error) {
+            console.log(error)
+            res.status(500).json(error)
+        }
+    },
 
     // fetchPerson: async (req, res) => {
     //     console.log(req.query)

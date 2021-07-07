@@ -34,6 +34,23 @@ module.exports = {
             return res.status(500).json(error)
         }
     },
+    getAll: async (req, res) => {
+        try {
+            console.log('am in')
+            // const { coupleType, userId } = req.query
+
+            // let filter = { brideId: userId }
+            // if (coupleType === 'groom') {
+            //     filter = { groomId: userId }
+            // }
+            const marriageData = await MarriageModel.find()
+                .populate('groomId')
+                .populate('brideId')
+            res.status(200).json(marriageData)
+        } catch (error) {
+            return res.status(500).json(error)
+        }
+    },
     // search: async (req, res) => {
     //     try {
     //         console.log(req.params)

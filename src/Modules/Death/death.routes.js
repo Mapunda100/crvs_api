@@ -6,6 +6,8 @@ const deathController = require('./death.controller')
 // localhost:8500/deaths/register
 router.post('/register', deathController.register)
 // router.get('/getDeaths', deathController.getDeaths)
+router.get('/all', deathController.getAll)
+
 router.get('/:userId', deathController.getDeath)
 // router.get('/findDeceased', deathController.)
 
